@@ -2,8 +2,7 @@
 #define SCANNER_H_INCLUDED
 
 enum{FDT,SEP,CAD};
-char cadena[100] = {0};
 
-void get_tokens();
-int  scan();
+int get_token();
+int  leer();
 #endif // SCANNER_H_INCLUDED

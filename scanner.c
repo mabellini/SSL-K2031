@@ -4,6 +4,8 @@
 #include "scanner.h"
 
 
+char cadena[100] = {0};
+
 int leer(){
 
   memset(cadena, 0, 100);
@@ -34,21 +36,29 @@ int leer(){
 }
 
   int get_token(){
-    int value;
-    while((value = leer()) != FDT){
-      switch(value){
-        case CAD:
-          printf("Cadena: '%s'\n", cadena);
-          break;
+    memset(cadena, 0, 100);
+  int i = 0;
+  char c;
 
-        case SEP:
-          printf("Separador: , \n");
-          break;
-
-        default:
-          printf("token erroneo \n");
-          break;
+  while((c = getchar())!=EOF){
+    if(!isspace(c)){
+      cadena[i] = c;
+      if(c == ',' && i > 0){
+        ungetc(',', stdin);
+        cadena[i] = 0;
+        return CAD;
       }
+      if(c == ',')
+        return SEP;
+      i++;
+      }
+    else if(i != 0)
+      return CAD;
     }
-    printf("Fin de Texto\n");
+  if(i > 0){
+    ungetc(EOF,stdin);
+    return CAD;
+  }
+  else
+    return FDT;
   }
